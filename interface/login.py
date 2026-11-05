@@ -1,5 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
+from pathlib import Path
+
+PASTA_IMAGENS = Path(__file__).resolve().parent.parent / "imagens"
 
 # JANELA DA APLICAÇÃO
 janela = tk.Tk()
@@ -7,39 +10,43 @@ janela.title("SigPesq")
 janela.geometry("1280x720")
 
 # FUNDO ROXO (BEM-VINDE)
-fundoTagline = tk.Frame(
+imagemFundo = tk.PhotoImage(file=PASTA_IMAGENS / "fundoTag.png")
+
+fundoTagline = tk.Canvas(
     janela,
     width=600,
     height=720,
-    bg="MediumOrchid1",
-    padx=10,
-    pady=10
-)
-tagline = tk.Frame(
-    fundoTagline,
-    padx=10,
-    pady=10,
-    bg=fundoTagline.cget("bg")
+    highlightthickness=0
 )
 
+fundoTagline.create_image(
+    0,
+    0,
+    image=imagemFundo,
+    anchor="nw"
+)
 
-# TAGLINE
-taglineTitulo = tk.Label(
-    tagline,
+fundoTagline.create_text(
+    300,
+    280,
     text="BEM-VINDE!",
     font=("Montserrat", 48, "bold"),
-    bg=fundoTagline.cget("bg")
+    fill="white"
 )
-separador = tk.Frame(
-    tagline,
-    height=2,
-    bg="#000000"
+
+fundoTagline.create_line(
+    100, 330,
+    500, 330,
+    fill="white",
+    width=2
 )
-taglineDesc = tk.Label(
-    tagline,
+
+fundoTagline.create_text(
+    300,
+    370,
     text="Faça o cadastro para continuar",
     font=("Montserrat", 24),
-    bg=fundoTagline.cget("bg")
+    fill="white"
 )
 
 
@@ -189,6 +196,32 @@ campoConfirma = criarCampo()
 placeholder(campoConfirma, "Confirme a senha")
 
 
+# IMAGENS
+
+
+
+imagemUsuario = tk.PhotoImage(file=PASTA_IMAGENS / "user.png")
+imagemSenha = tk.PhotoImage(file=PASTA_IMAGENS / "key-round.png")
+imagemEmail = tk.PhotoImage(file=PASTA_IMAGENS / "mail.png")
+imagemCPF = tk.PhotoImage(file=PASTA_IMAGENS / "id-card.png")
+imagemConfirma = tk.PhotoImage(file=PASTA_IMAGENS / "shield-check.png")
+imagemCategoria = tk.PhotoImage(file=PASTA_IMAGENS / "user-shield.png")
+
+imagemUsuario = imagemUsuario.zoom(2, 2)
+imagemSenha = imagemSenha.zoom(2, 2)
+imagemEmail = imagemEmail.zoom(2, 2)
+imagemCPF = imagemCPF.zoom(2, 2)
+imagemConfirma = imagemConfirma.zoom(2, 2)
+imagemCategoria = imagemCategoria.zoom(2, 2)
+
+iconeUsuario = tk.Label(camposForm, image=imagemUsuario, bg=fundoCampos.cget("bg"))
+iconeCategoria = tk.Label(camposForm, image=imagemCategoria, bg=fundoCampos.cget("bg"))
+iconeEmail = tk.Label(camposForm, image=imagemEmail, bg=fundoCampos.cget("bg"))
+iconeCPF = tk.Label(camposForm, image=imagemCPF, bg=fundoCampos.cget("bg"))
+iconeSenha = tk.Label(camposForm, image=imagemSenha, bg=fundoCampos.cget("bg"))
+iconeConfirma = tk.Label(camposForm, image=imagemConfirma, bg=fundoCampos.cget("bg"))
+
+
 
 
 
@@ -199,15 +232,6 @@ placeholder(campoConfirma, "Confirme a senha")
 # EXIBIÇÃO - PARTE ROXA
 fundoTagline.pack_propagate(False)
 fundoTagline.pack(side="left")
-
-tagline.pack(
-    expand=True,
-    anchor="center"
-)
-
-taglineTitulo.pack()
-separador.pack(fill="x")
-taglineDesc.pack()
 
 
 # EXIBIÇÃO - PARTE DO FORMULÁRIO
@@ -228,6 +252,13 @@ campoEmail.grid(row=3, column=1, sticky="w", pady=5, ipady=7)
 campoCPF.grid(row=4, column=1, sticky="w", pady=5, ipady=7)
 campoSenha.grid(row=5, column=1, sticky="w", pady=5, ipady=7)
 campoConfirma.grid(row=6, column=1, sticky="w", pady=5, ipady=7)
+
+iconeUsuario.grid(row=1, column=0, sticky="w", padx=(0, 15), pady=10, ipady=14)
+iconeCategoria.grid(row=2, column=0, sticky="w", padx=(0, 15), pady=10, ipady=7)
+iconeEmail.grid(row=3, column=0, sticky="w", padx=(0, 15), pady=10, ipady=7)
+iconeCPF.grid(row=4, column=0, sticky="w", padx=(0, 15), pady=10, ipady=7)
+iconeSenha.grid(row=5, column=0, sticky="w", padx=(0, 15), pady=10, ipady=7)
+iconeConfirma.grid(row=6, column=0, sticky="w", padx=(0, 15), pady=10, ipady=7)
 
 # FIM
 janela.mainloop()
